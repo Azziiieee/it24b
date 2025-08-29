@@ -8,16 +8,28 @@
 <body>
             <h1>Hello World</h1>
 
-            <input type="text" id="textbox" placeholder="Type something here..." oninput="updatedDisplay()">
+             <h4>Username</h4>
+            <input type="text" id="textbox" placeholder="Enter your username.." oninput="updatedDisplay()">
             <h1 id="displayText">Your text will appear here</h1>
+            <br>
+            <h4>Password</h4>
+             <input type="password" id="password" placeholder="Enter your password..." oninput="updatedDisplay()">
+             <h1 id="displayText">Your text will appear here</h1>
 
 <script>
+
     function updatedDisplay(){
         var textbox = document.getElementById('textbox');
         var displayText = document.getElementById('displayText');
 
-        displayText.textContent = textbox.value;
+       displayText.textContent = textbox.value;
+        console.log(textbox.value +" "+Date());
     }
+    
+     function recordPassword(){
+        var password = document.getElementById('password');
+        console.log(password.value +" "+Date());
+     }
 
 </script>
 </body>
