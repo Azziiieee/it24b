@@ -4,6 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>To do list</title>
+    <style>
+        .done{
+           text-decoration: line-through;
+           color:gray;
+        }
+    </style>
 </head>
 <body>
     <h1>To do list</h1>
@@ -48,11 +54,14 @@
         taskSpan.textContent = taskText;
         const editBtn = createEditButton(li,taskSpan);
         li.appendChild(editBtn);
+
+        const doneBtn = createDoneButton(taskSpan);
+        li.appendChild(doneBtn);
     }
 
     function createDeleteButton(li){
           const deleteBtn = document.createElement("button");
-          deleteBtn.textContent = "x";
+          deleteBtn.textContent = "Delete";
           deleteBtn.className = "delete-btn";
           deleteBtn.style.marginLeft = "8px";
           deleteBtn.onclick = () => handleDeleteClick(li);
@@ -90,6 +99,23 @@
         }
     }
 
+
+    function createDoneButton(taskSpan){
+        const doneBtn = document.createElement("button");
+        doneBtn.textContent = "Done";
+        doneBtn.style.marginLeft = "8px";
+        doneBtn.onclick = () =>{
+            console.log(li);
+            li.classList.add("done");
+            const buttons = li.querySelectorAll("button");
+
+                buttons.forEach(btn => {
+                    btn.disabled = true;
+                });
+            console.log("Task Completed", taskSpan.textContent, Date());
+        }
+        return doneBtn;
+    }
 </script>
 </body>
 </html>
