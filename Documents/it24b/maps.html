@@ -14,10 +14,10 @@
      crossorigin=""></script>
 
 <style>
-    #map { height: 180px; }
+    #map {
+         height: 500px;
+    }
 </style>
-
-
 
 </head>
 <body>
@@ -26,12 +26,29 @@
 
 </body>
 <script>
-    var map = L.map('map').setView([51.505, -0.09], 13);
-
+    
+function initMap(mapDataUrl){
+    const map = L.map('map').setview([8.360062680699075, 124.86822637620702], 17);
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 }).addTo(map);
+console.log("Map Loaded" + Date());
 
-    </script>
-    </html>
+fetch(mapDataUrl)
+    .then(response => response.json())
+    .then(data => {
+        data.forEach(pin=>{
+            const marker = L.marker([pin.lat, pin.lng]).addTo(map);
+            marker.bindPopup(`${pin.name}<br>${pin.description}`);
+            console.log(`${pin.name} Loaded ` + Date());
+        });
+    })
+    .catch(err=>console.error('Error loading JSON:',err));
+
+    }
+
+    document.addEventListener('DOMContentLoaded',()=>{
+        initMap(map);
+        initMap('maps.json');
+    })
