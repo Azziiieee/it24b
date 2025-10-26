@@ -46,36 +46,61 @@ function initMap(mapDataUrl){
     );
 
     openStreetMap.addTo(map);
-    
-    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 19,
-    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-}).addTo(map);
-console.log("Map Loaded" + Date());
+    console.log("Base map tile layer loaded" + Date());
 
-fetch(mapDataUrl)
-    .then(response => response.json())
-    .then(data => {
-        data.forEach(pin=>{
+    const markerGroups = {};
 
-            const marker = L.marker([pin.lat, pin.lng]).addTo(map);
+    fetch(mapDataUrl)
+        .then(response => response.json())
+        .then(data => {
+            //Markers
+            data.forEach(pin=>{
+                const type = pin.locationType || "Other";
 
-            const img = `<img src='${pin.img}' class="popup-image">`;
-            marker.bindPopup(`
-                ${img} <br>
-                <b>${pin.title}<br>
-                ${pin.description}
+                //Create Marker Group
+                if(!markerGroups[type]){
+                    markerGroups[type] = L.layerGroup();
+                }
+
+                //Marker and Popup
+                const marker = L.marker([pin.lat, pin.lng]).addTo(map);
+                const img = `<img src='${pin.img}' class="popup-image">`;
+                    marker.bindPopup(`
+                        ${img} <br>
+                        <b>${pin.title}<br>
+                        ${pin.description}
+                        ${pin.locationType}
            `);
-
             console.log(`${pin.name} Loaded ` + Date());
+
+            markerGroups[type].addLayer(marker);
+
+
         });
+
+        //Add marker groups into the map according to marker filter
+        Object.values(markerGroups).forEach(group => group.adddTo(map));
+
+        //Map Layer Control
+        const baseMaps={
+            "OpenStreetMap":openStreetMap,
+            "Satellite":satellite
+        }
+
+        const overlayMaps={};
+
+        //Add marker groups into the basemap
+        Object.keys(markerGroups).forEach(type=>{
+            overlayMaps[type] = markerGroups[type];
+        });
+
+        L.control.layers(baseMaps,overlayMaps,{collapsed:false}).addTo(map);
     }) 
     .catch(err=>console.error('Error loading JSON:',err));
+
     }
-
     document.addEventListener('DOMContentLoaded',()=>{
-        initMap('maps.json');
+        initMap('campus-maps.json');
     })
-
     </script>
     </html>
