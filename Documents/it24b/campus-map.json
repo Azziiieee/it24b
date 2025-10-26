@@ -1,0 +1,19 @@
+[
+    {
+        "name":"ICS Laboratory 1",
+        "title":"ICS Lab 1",
+        "description":"This is the ICS Laboratory 1, yipee",
+        "img":"https://www.google.com/url?sa=i&url=https%3A%2F%2Fpixabay.com%2Fgifs%2Fsearch%2Fcold%2F&psig=AOvVaw2JnKlBq9Oa2RORFaoMoZWL&ust=1761552073518000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCLjWjviywZADFQAAAAAdAAAAABAE",
+        "lat":8.3593,
+        "lng":124.8691
+    },
+    {
+         "name":"Comfort Room 1",
+        "title":"CR nga way yabi",
+        "description":"",
+        "img":"https://media1.tenor.com/m/fJK1WcHbXFAAAAAC/stuck-in-toilet-fell-into-toilet.gif",
+        "lat":8.359009695166359,
+        "lng":124.86911436078864,
+        "locationType":"Other"
+    }
+]
